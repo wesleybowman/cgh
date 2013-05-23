@@ -1,3 +1,30 @@
+'''
+    cgh allows the user to created Computer Generated Holograms out of an
+    image.
+    Copyright (C) 2013 Wesley A. Bowman
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License,
+    or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the
+    Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+    Boston, MA 02111-1307 USA
+
+    This program takes any input images, and turns all of the pixels below
+    a certain threshold (in this case 0.5, but all images are normalized to
+    be between zero and one), and turns them into point sources, which then
+    propagate to the hologram, and interfere with one another.
+
+'''
+
 import numpy as np
 import matplotlib.pyplot as plt
 import time
@@ -50,10 +77,10 @@ def constants():
     ipxShape=ipx.shape[1]
     ipyShape=ipy.shape[1]
 
-    film = np.zeros((ipxShape,ipyShape))
-    film=film+0j
+    hologram = np.zeros((ipxShape,ipyShape))
+    hologram=hologram+0j
 
-    return k,holoRange,ipx,ipy,ipxShape,ipyShape,film
+    return k,holoRange,ipx,ipy,ipxShape,ipyShape,hologram
 
 def getHoloPara(a=0.03,b=0.03,c=2):
     '''Get the parameters needed for creating the hologram.
@@ -112,7 +139,7 @@ def getComplexwave():
                 distance=np.sqrt(dx**2+dy**2+dz**2)
                 complexwave=np.exp(1j*k*distance)
 
-                film[i][j]=film[i][j]+complexwave
+                hologram[i][j]=hologram[i][j]+complexwave
 
 def plotHologram(hologram):
     '''Plotting the real part of the hologram, and using a grey scale color
@@ -140,7 +167,7 @@ if __name__=='__main__':
 
     wavelength,sampling,dimensions,xOffset,yOffset=getParameters(632e-9,600,1)
 
-    k,holoRange,ipx,ipy,ipxShape,ipyShape,film=constants()
+    k,holoRange,ipx,ipy,ipxShape,ipyShape,hologram=constants()
 
     width,height,depth,objPoint=getHoloPara()
 
@@ -176,5 +203,5 @@ if __name__=='__main__':
     t2=time.time()
     print t2-t1
 
-    plotHologram(film)
+    plotHologram(hologram)
 
