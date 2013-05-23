@@ -95,7 +95,7 @@ def getHoloPara(a=0.03,b=0.03,c=2):
     return width,height,depth
     
 def getObjectpoints(img, width, height, depth):
-    '''Figure out which points in the image will be used as source points. '''
+    '''Not vectorized, and no longer used. Here as a reference.'''
     
     obj = np.double(img)
     objX=obj.shape[0]
@@ -123,6 +123,7 @@ def getObjectpoints(img, width, height, depth):
     return objectpoints
     
 def vec_get_objectpoints(img, width, height, depth):
+    '''Figure out which points in the image will be used as source points. '''
         
     obj = np.double(img)
     objX=obj.shape[0]
@@ -147,8 +148,7 @@ def vec_get_objectpoints(img, width, height, depth):
     return objectpoints
 
 def getComplexwave():
-    '''Iterate through every source point, and calculate the complex wave 
-       contribution at each sampling pixel on the film.'''
+    '''Not vectorized, and no longer used. Here as a reference.'''
     for o in xrange(objPointShape):
         print o+1
 
